@@ -65,8 +65,8 @@ describe('graphql', () => {
       const result = await gql(
         `query{ pendingPerformanceReviews(userId: "${user.id}") { createdAt user { name } }}`
       );
-      expect(typeof result).toBe('array');
-      expect(typeof result.pendingPerformanceReviews).toBe('array');
+      expect(typeof result).toBe('object');
+      expect(Array.isArray(result.pendingPerformanceReviews)).toBeTruthy();
       expect(result.pendingPerformanceReviews.length).toBe(
         userPendingFeedbacks.length
       );
