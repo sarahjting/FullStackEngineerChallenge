@@ -8,7 +8,10 @@
     "start": "node ./srv/index.js",
     "serve": "nodemon ./srv/index.js",
     "hack": "vue-cli-service build --watch",
-    "build": "vue-cli-service build"
+    "build": "vue-cli-service build",
+    "db:seed": "knex seed:run --knexfile ./srv/knexfile.js",
+    "db:migrate": "knex migrate:latest --knexfile ./srv/knexfile.js",
+    "db:rollback": "knex migrate:rollback --knexfile ./srv/knexfile.js"
   },
   "repository": {
     "type": "git",
