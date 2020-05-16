@@ -1,3 +1,5 @@
+require('dotenv').config();
+
 const express = require('express');
 const { ApolloServer } = require('apollo-server-express');
 const bodyParser = require('body-parser');
@@ -12,8 +14,6 @@ const apolloServer = new ApolloServer({
   playground: true,
 });
 
-const PORT = 3000;
-
 const app = express();
 
 app.use(express.static(`${__dirname}/../dist`));
@@ -21,7 +21,7 @@ app.use(express.static(`${__dirname}/../dist`));
 app.use('/graphql', bodyParser.json());
 apolloServer.applyMiddleware({ app });
 
-app.listen({ port: PORT }, () => {
-  console.log(`Front: http://localhost:${PORT}`);
-  console.log(`Back: http://localhost:${PORT}/graphql`);
+app.listen({ port: process.env.PORT }, () => {
+  console.log(`Front: http://localhost:${process.env.PORT}`);
+  console.log(`Back: http://localhost:${process.env.PORT}/graphql`);
 });
