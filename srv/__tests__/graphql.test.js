@@ -54,11 +54,24 @@ describe('graphql', () => {
 
     it('can list all performance reviews', async () => {
       const result = await gql(
-        `query{ performanceReviews { createdAt user { name } feedbacks { user { name } feedback } }}`
+        `query{ performanceReviews { createdAt user { name } feedbacks { user { name } feedback createdAt } }}`
       );
       expect(typeof result).toBe('object');
-      expect(Array.isArray(result.performanceReviews)).toBeTruthy();
-      expect(result.performanceReviews.length).toBe(performanceReviews.length);
+
+      const reviews = result.performanceReviews;
+      expect(Array.isArray(reviews)).toBeTruthy();
+      expect(reviews.length).toBe(performanceReviews.length);
+
+      expect(typeof reviews[0].createdAt).toBe('string');
+      expect(typeof reviews[0].user).toBe('object');
+      expect(typeof reviews[0].user.name).toBe('string');
+
+      expect(Array.isArray(reviews[0].feedbacks)).toBeTruthy();
+      expect(typeof reviews[0].feedbacks[0]).toBe('object');
+      expect(typeof reviews[0].feedbacks[0].feedback).toBe('string');
+      expect(typeof reviews[0].feedbacks[0].createdAt).toBe('string');
+      expect(typeof reviews[0].feedbacks[0].user).toBe('object');
+      expect(typeof reviews[0].feedbacks[0].user.name).toBe('string');
     });
 
     it('can list pending performance reviews', async () => {
