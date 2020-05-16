@@ -1,5 +1,6 @@
 const express = require('express');
 const { ApolloServer } = require('apollo-server-express');
+const bodyParser = require('body-parser');
 
 const { typeDefs } = require('./graphql/typeDefs');
 const { resolvers } = require('./graphql/resolvers');
@@ -14,8 +15,12 @@ const apolloServer = new ApolloServer({
 const PORT = 3000;
 
 const app = express();
+
 app.use(express.static(`${__dirname}/../dist`));
+
+app.use('/graphql', bodyParser.json());
 apolloServer.applyMiddleware({ app });
+
 app.listen({ port: PORT }, () => {
   console.log(`Front: http://localhost:${PORT}`);
   console.log(`Back: http://localhost:${PORT}/graphql`);
