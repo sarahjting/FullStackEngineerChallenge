@@ -14,6 +14,7 @@ module.exports = (knex) => ({
   },
   Query: {
     user: (_, args) => knex('users').where('name', args.name).first(),
+    users: () => knex('users'),
     performanceReviews: () => knex('performance_reviews'),
     pendingPerformanceReviews: (_, args) =>
       knex('performance_reviews')

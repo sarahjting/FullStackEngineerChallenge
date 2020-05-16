@@ -27,7 +27,17 @@ describe('graphql', () => {
   });
 
   describe('users', () => {
-    it('can retrieve a user from the database', async () => {
+    it('can retrieve all users', async () => {
+      const result = await gql(`query{ users { id name isAdmin }}`);
+      expect(typeof result).toBe('object');
+      expect(Array.isArray(result.users)).toBeTruthy();
+      expect(result.users.length).toBe(users.length);
+      expect(typeof result.users[0]).toBe('object');
+      expect(typeof result.users[0].id).toBe('string');
+      expect(typeof result.users[0].name).toBe('string');
+      expect(typeof result.users[0].isAdmin).toBe('boolean');
+    });
+    it('can retrieve a user', async () => {
       const result = await gql(
         `query{ user(name:"Admin") { id name isAdmin }}`
       );

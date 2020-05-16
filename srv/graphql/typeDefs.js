@@ -20,6 +20,7 @@ exports.typeDefs = gql`
   }
   type Query {
     user(name: String): User
+    users: [User]
     performanceReviews: [PerformanceReview]
     pendingPerformanceReviews(userId: String): [PerformanceReview]
   }
