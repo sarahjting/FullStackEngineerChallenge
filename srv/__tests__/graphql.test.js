@@ -29,10 +29,10 @@ describe('graphql', () => {
   describe('users', () => {
     it('can retrieve a user from the database', async () => {
       const result = await gql(
-        `query{ user(name:'Admin') { id name isAdmin }}`
+        `query{ user(name:"Admin") { id name isAdmin }}`
       );
-      expect(typeof result).toBe('array');
-      expect(typeof result.user).toBe('array');
+      expect(typeof result).toBe('object');
+      expect(typeof result.user).toBe('object');
       expect(typeof result.user.id).toBe('string');
       expect(typeof result.user.isAdmin).toBe('boolean');
       expect(result.user.name).toBe('Admin');

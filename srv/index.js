@@ -4,8 +4,10 @@ const express = require('express');
 const { ApolloServer } = require('apollo-server-express');
 const bodyParser = require('body-parser');
 
+const knex = require('knex')(require('./knexfile'));
+
 const { typeDefs } = require('./graphql/typeDefs');
-const { resolvers } = require('./graphql/resolvers');
+const resolvers = require('./graphql/resolvers')(knex);
 
 const apolloServer = new ApolloServer({
   typeDefs,
