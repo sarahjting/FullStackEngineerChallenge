@@ -39,7 +39,8 @@ describe('graphql', () => {
     });
     it('can retrieve a user', async () => {
       const result = await gql(
-        `query{ user(name:"Admin") { id name isAdmin }}`
+        `query($name:String) { user(name:$name) { id name isAdmin }}`,
+        { name: 'Admin' }
       );
       expect(typeof result).toBe('object');
       expect(typeof result.user).toBe('object');
@@ -86,7 +87,8 @@ describe('graphql', () => {
 
     it('can list pending performance reviews', async () => {
       const result = await gql(
-        `query{ pendingPerformanceReviews(userId: "${user.id}") { createdAt user { name } }}`
+        `query($userId: String) { pendingPerformanceReviews(userId: $userId) { createdAt user { name } }}`,
+        { userId: user.id }
       );
       expect(typeof result).toBe('object');
       expect(Array.isArray(result.pendingPerformanceReviews)).toBeTruthy();
@@ -97,7 +99,12 @@ describe('graphql', () => {
 
     it('can submit feedback to a performance review', async () => {
       const result = await gql(
-        `mutation{ submitPerformanceReviewFeedback(userId: "${user.id}", performanceReviewId: "${performanceReview.id}", feedback: "Foo") }`
+        `mutation($userId: String, $performanceReviewId: String, $feedback: String){ submitPerformanceReviewFeedback(userId: $userId, performanceReviewId: $performanceReviewId, feedback: $feedback) }`,
+        {
+          userId: user.id,
+          performanceReviewId: performanceReview.id,
+          feedback: 'Foo',
+        }
       );
       expect(typeof result).toBe('object');
       expect(typeof result.submitPerformanceReviewFeedback).toBe('boolean');
