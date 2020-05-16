@@ -14,7 +14,7 @@ const apolloServer = new ApolloServer({
 const PORT = 3000;
 
 const app = express();
-app.use(express.static(`${__dirname}/../public`));
+app.use(express.static(`${__dirname}/../dist`));
 apolloServer.applyMiddleware({ app });
 app.listen({ port: PORT }, () => {
   console.log(`Front: http://localhost:${PORT}`);
