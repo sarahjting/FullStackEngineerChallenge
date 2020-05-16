@@ -56,8 +56,9 @@ describe('graphql', () => {
       const result = await gql(
         `query{ performanceReviews { createdAt user { name } feedbacks { user { name } feedback } }}`
       );
-      expect(typeof result).toBe('array');
-      expect(typeof result.performanceReviews).toBe('array');
+      expect(typeof result).toBe('object');
+      expect(Array.isArray(result.performanceReviews)).toBeTruthy();
+      expect(result.performanceReviews.length).toBe(performanceReviews.length);
     });
 
     it('can list pending performance reviews', async () => {
