@@ -23,4 +23,11 @@ exports.typeDefs = gql`
     performanceReviews: [PerformanceReview]
     pendingPerformanceReviews(userId: String): [PerformanceReview]
   }
+  type Mutation {
+    submitPerformanceReviewFeedback(
+      userId: String
+      performanceReviewId: String
+      feedback: String
+    ): Boolean
+  }
 `;

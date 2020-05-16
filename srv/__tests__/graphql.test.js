@@ -74,10 +74,10 @@ describe('graphql', () => {
 
     it('can submit feedback to a performance review', async () => {
       const result = await gql(
-        `query{ submitPerformanceReviewFeedback(userId: "${user.id}", performanceReviewId: "${performanceReview.id}", feedback: "Foo") }`
+        `mutation{ submitPerformanceReviewFeedback(userId: "${user.id}", performanceReviewId: "${performanceReview.id}", feedback: "Foo") }`
       );
-      expect(typeof result).toBe('array');
-      expect(typeof result.submitPerformanceReviewFeedback).toBe(true);
+      expect(typeof result).toBe('object');
+      expect(typeof result.submitPerformanceReviewFeedback).toBe('boolean');
 
       const databaseCheck = await knex('performance_review_feedbacks')
         .where('user_id', user.id)

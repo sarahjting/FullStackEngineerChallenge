@@ -20,4 +20,14 @@ module.exports = (knex) => ({
         .where('performance_review_feedbacks.user_id', args.userId)
         .whereNull('performance_review_feedbacks.feedback'),
   },
+  Mutation: {
+    submitPerformanceReviewFeedback: (_, args) =>
+      knex('performance_review_feedbacks')
+        .where('review_id', args.performanceReviewId)
+        .where('user_id', args.userId)
+        .limit(1)
+        .update({
+          feedback: args.feedback,
+        }),
+  },
 });
