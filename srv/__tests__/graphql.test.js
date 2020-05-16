@@ -2,7 +2,6 @@ require('dotenv').config();
 const axios = require('axios');
 const knex = require('knex')(require('../knexfile.js'));
 
-const PORT = 3000;
 function gql(query, variables = {}) {
   return axios
     .post(`http://localhost:${process.env.PORT}/graphql`, {
