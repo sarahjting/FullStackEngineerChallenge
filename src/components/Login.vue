@@ -31,13 +31,11 @@ export default {
   methods: {
     onSubmit: function() {
       this.isLoading = true;
-      utils.user(this.form.name).then((x) => {
-        if (x) {
-          this.$store.commit('setLoggedInUser', this.form);
+      utils.user(this.form.name).then((loggedInUser) => {
+        if (loggedInUser) {
+          this.$store.commit('setLoggedInUser', loggedInUser);
           this.$router.push('/performance-reviews');
-          this.form = {
-            name: '',
-          };
+          this.form = { name: '' };
         }
         this.isLoading = false;
       });
