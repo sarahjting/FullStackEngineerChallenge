@@ -7,5 +7,6 @@
 <script>
 export default {
   name: 'PerformanceReportIndex',
+  mounted: function() {},
 };
 </script>

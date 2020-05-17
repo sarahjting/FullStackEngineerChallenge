@@ -34,7 +34,7 @@ export default {
       utils.user(this.form.name).then((x) => {
         if (x) {
           this.$store.commit('setLoggedInUser', this.form);
-          this.$router.push('performance-reports');
+          this.$router.push('/performance-reviews');
           this.form = {
             name: '',
           };
@@ -44,8 +44,8 @@ export default {
     },
   },
   mounted: function() {
-    if (this.$store.loggedInUser) {
-      this.$router.push('performance-reports');
+    if (this.$store.state.loggedInUser) {
+      this.$router.push('/performance-reviews');
     }
   },
 };

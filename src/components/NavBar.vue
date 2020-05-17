@@ -19,7 +19,7 @@
             <b-icon-person-fill />
             {{ $store.state.loggedInUser.name }}
           </b-nav-item>
-          <b-nav-item href="#">Logout</b-nav-item>
+          <b-nav-item href="#" @click="logout()">Logout</b-nav-item>
         </b-navbar-nav>
         <b-navbar-nav class="ml-auto" v-else>
           <router-link to="/" class="nav-link">
@@ -34,6 +34,12 @@
 
 <script>
 export default {
-  name: "NavBar"
+  name: 'NavBar',
+  methods: {
+    logout: function() {
+      this.$store.state.loggedInUser = null;
+      this.$router.push('/');
+    },
+  },
 };
 </script>
