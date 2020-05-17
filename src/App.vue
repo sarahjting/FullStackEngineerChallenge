@@ -4,7 +4,7 @@
     <b-container class="container">
       <b-row>
         <b-col offset="1" cols="10">
-          Hello World!
+          <router-view></router-view>
         </b-col>
       </b-row>
     </b-container>

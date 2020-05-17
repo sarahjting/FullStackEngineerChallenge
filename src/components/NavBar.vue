@@ -7,8 +7,10 @@
 
       <b-collapse id="nav-collapse" is-nav>
         <b-navbar-nav>
-          <b-nav-item href="#">Link</b-nav-item>
-          <b-nav-item href="#" disabled>Disabled</b-nav-item>
+          <router-link to="/performance-reviews" class="nav-link">
+            <b-icon-clipboard-data class="mr-1" />
+            Performance Reviews
+          </router-link>
         </b-navbar-nav>
 
         <!-- Right aligned nav items -->
@@ -26,6 +28,6 @@
 
 <script>
 export default {
-  name: 'App',
+  name: 'NavBar',
 };
 </script>
