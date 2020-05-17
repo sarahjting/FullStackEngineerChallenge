@@ -5,6 +5,7 @@
   "main": "src/main.js",
   "scripts": {
     "test": "jest",
+    "test:seed": "npm run db:seed && npm run test",
     "start": "node ./srv/index.js",
     "serve": "nodemon ./srv/index.js",
     "hack": "vue-cli-service build --watch",
