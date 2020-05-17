@@ -6,7 +6,7 @@
       <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
 
       <b-collapse id="nav-collapse" is-nav>
-        <b-navbar-nav>
+        <b-navbar-nav v-if="$store.state.loggedInUser">
           <router-link to="/performance-reviews" class="nav-link">
             <b-icon-clipboard-data class="mr-1" />
             Performance Reviews
@@ -14,12 +14,18 @@
         </b-navbar-nav>
 
         <!-- Right aligned nav items -->
-        <b-navbar-nav class="ml-auto">
+        <b-navbar-nav class="ml-auto" v-if="$store.state.loggedInUser">
           <b-nav-item disabled>
             <b-icon-person-fill />
-            Admin
+            {{ $store.state.loggedInUser.name }}
           </b-nav-item>
           <b-nav-item href="#">Logout</b-nav-item>
+        </b-navbar-nav>
+        <b-navbar-nav class="ml-auto" v-else>
+          <router-link to="/" class="nav-link">
+            <b-icon-person />
+            Login
+          </router-link>
         </b-navbar-nav>
       </b-collapse>
     </b-navbar>
@@ -28,6 +34,6 @@
 
 <script>
 export default {
-  name: 'NavBar',
+  name: "NavBar"
 };
 </script>
