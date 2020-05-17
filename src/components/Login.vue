@@ -17,29 +17,36 @@
 </template>
 
 <script>
-import Loader from "./Loader";
+import Loader from './Loader';
+import utils from '../utils';
 export default {
-  name: "Login",
+  name: 'Login',
   components: { Loader },
   data: () => ({
     form: {
-      name: ""
+      name: '',
     },
-    isLoading: false
+    isLoading: false,
   }),
   methods: {
     onSubmit: function() {
-      this.$store.commit("setLoggedInUser", this.form);
-      this.$router.push("performance-reports");
-      this.form = {
-        name: ""
-      };
-    }
+      this.isLoading = true;
+      utils.user(this.form.name).then((x) => {
+        if (x) {
+          this.$store.commit('setLoggedInUser', this.form);
+          this.$router.push('performance-reports');
+          this.form = {
+            name: '',
+          };
+        }
+        this.isLoading = false;
+      });
+    },
   },
   mounted: function() {
     if (this.$store.loggedInUser) {
-      this.$router.push("performance-reports");
+      this.$router.push('performance-reports');
     }
-  }
+  },
 };
 </script>

@@ -2,19 +2,24 @@ import axios from 'axios';
 import dotenv from 'dotenv';
 dotenv.config();
 
+const baseUrl = process.env.APP_URL
+  ? process.env.APP_URL + ':' + process.env.PORT
+  : '';
+
 const gql = function(query, variables = {}) {
   return axios
-    .post(`http://localhost:${process.env.PORT}/graphql`, {
-      query,
-      variables,
-    })
+    .post(`${baseUrl}/graphql`, { query, variables })
     .then((data) => data.data.data)
-    .catch((e) =>
-      console.log(
-        `Error in GQL:\n ${query}\n`,
-        e.response.data.errors.map((x) => x.message)
-      )
-    );
+    .catch((e) => {
+      if (e.response) {
+        console.log(
+          `Error in GQL:\n ${query}\n`,
+          e.response.data.errors.map((x) => x.message)
+        );
+      } else {
+        throw e;
+      }
+    });
 };
 
 export default {
