@@ -65,7 +65,7 @@ describe('graphql', () => {
 
     it('can list all performance reviews', async () => {
       const result = await gql(
-        `query{ performanceReviews { createdAt user { name } feedbacks { user { name } feedback createdAt } }}`
+        `query{ performanceReviews { id createdAt user { name } feedbacks { user { name } feedback createdAt } }}`
       );
       expect(typeof result).toBe('object');
 
@@ -87,7 +87,7 @@ describe('graphql', () => {
 
     it('can list pending performance reviews', async () => {
       const result = await gql(
-        `query($userId: String) { pendingPerformanceReviews(userId: $userId) { createdAt user { name } }}`,
+        `query($userId: String) { pendingPerformanceReviews(userId: $userId) { id createdAt user { name } }}`,
         { userId: user.id }
       );
       expect(typeof result).toBe('object');
@@ -95,6 +95,28 @@ describe('graphql', () => {
       expect(result.pendingPerformanceReviews.length).toBe(
         userPendingFeedbacks.length
       );
+    });
+
+    it('can create performance review', async () => {
+      const feedbackUserIds = users
+        .filter((x) => !x.isAdmin && x.id !== user.id)
+        .map((x) => x.id);
+
+      const result = await gql(
+        `mutation($userId: String, $feedbackUserIds: [String]){ 
+          createPerformanceReview(userId: $userId, feedbackUserIds: $feedbackUserIds) { 
+            id createdAt user { name } feedbacks { user { name } feedback createdAt } 
+          }
+        }`,
+        { userId: user.id, feedbackUserIds }
+      );
+      expect(typeof result).toBe('object');
+      expect(typeof result.createPerformanceReview).toBe('object');
+
+      const performanceReview = result.createPerformanceReview;
+      expect(typeof performanceReview.id).toBe('string');
+      expect(Array.isArray(performanceReview.feedbacks)).toBeTruthy();
+      expect(performanceReview.feedbacks.length).toBe(feedbackUserIds.length);
     });
 
     it('can submit feedback to a performance review', async () => {

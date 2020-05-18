@@ -47,5 +47,29 @@ module.exports = (knex) => ({
           feedback: args.feedback,
         })
         .then(() => true),
+    createPerformanceReview: async (_, args) => {
+      await knex('performance_reviews').insert({
+        id: knex.raw('UUID()'),
+        user_id: args.userId,
+      });
+
+      // unfortunately MySQL does not support returning
+      // in the future i'll make sure to give MySQL tables an AI column just for easier insertion handling
+      // (or just use PostgreSQL)
+      const performanceReview = await knex('performance_reviews')
+        .where('user_id', args.userId)
+        .orderBy('created_at', 'DESC')
+        .first();
+
+      await knex('performance_review_feedbacks').insert(
+        args.feedbackUserIds.map((user) => ({
+          review_id: performanceReview.id,
+          user_id: user.id,
+          feedback: null,
+        }))
+      );
+
+      return performanceReview;
+    },
   },
 });

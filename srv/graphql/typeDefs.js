@@ -30,5 +30,9 @@ exports.typeDefs = gql`
       performanceReviewId: String
       feedback: String
     ): Boolean
+    createPerformanceReview(
+      userId: String
+      feedbackUserIds: [String]
+    ): PerformanceReview
   }
 `;
