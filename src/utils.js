@@ -57,4 +57,18 @@ export default {
       }
     ).then((x) => x.submitPerformanceReviewFeedback);
   },
+  createPerformanceReview: function(params) {
+    const { user, feedbackUsers } = params;
+    return gql(
+      `mutation($userId: String, $feedbackUserIds: [String]){ 
+        createPerformanceReview(userId: $userId, feedbackUserIds: $feedbackUserIds) { 
+          id createdAt user { name } feedbacks { user { name } feedback createdAt } 
+        }
+      }`,
+      {
+        userId: user.id,
+        feedbackUserIds: feedbackUsers.map((x) => x.id),
+      }
+    ).then((x) => x.createPerformanceReview);
+  },
 };

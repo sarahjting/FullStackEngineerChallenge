@@ -2,6 +2,7 @@ import Vue from 'vue';
 import VueRouter from 'vue-router';
 import PerformanceReviewIndex from './components/PerformanceReview/PerformanceReviewIndex';
 import PerformanceReviewView from './components/PerformanceReview/PerformanceReviewView';
+import PerformanceReviewCreate from './components/PerformanceReview/PerformanceReviewCreate';
 import Login from './components/Login';
 import store from './vuex';
 
@@ -12,6 +13,11 @@ const routes = [
     path: '/performance-reviews',
     component: PerformanceReviewIndex,
     name: 'performanceReviewIndex',
+  },
+  {
+    path: '/performance-review/create',
+    component: PerformanceReviewCreate,
+    name: 'performanceReviewCreate',
   },
   {
     path: '/performance-review/:id',

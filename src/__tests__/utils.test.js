@@ -34,4 +34,15 @@ describe.only('utils', () => {
     });
     expect(typeof result).toBe('boolean');
   });
+
+  it('can create performance review', async () => {
+    const user = await utils.user('User 5');
+    const feedbackUsers = await utils.users();
+    const performanceReview = await utils.createPerformanceReview({
+      user,
+      feedbackUsers,
+    });
+    expect(typeof performanceReview).toBe('object');
+    expect(performanceReview).toBeTruthy();
+  });
 });
