@@ -4,7 +4,7 @@ const knex = require('knex')(require('../knexfile.js'));
 
 function gql(query, variables = {}) {
   return axios
-    .post(`http://localhost:${process.env.PORT}/graphql`, {
+    .post(`${process.env.APP_URL}:${process.env.PORT}/graphql`, {
       query,
       variables,
     })

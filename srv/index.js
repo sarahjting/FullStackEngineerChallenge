@@ -24,6 +24,6 @@ app.use('/graphql', bodyParser.json());
 apolloServer.applyMiddleware({ app });
 
 app.listen({ port: process.env.PORT }, () => {
-  console.log(`Front: http://localhost:${process.env.PORT}`);
-  console.log(`Back: http://localhost:${process.env.PORT}/graphql`);
+  console.log(`Front: ${process.env.APP_URL}:${process.env.PORT}`);
+  console.log(`Back: ${process.env.APP_URL}:${process.env.PORT}/graphql`);
 });
