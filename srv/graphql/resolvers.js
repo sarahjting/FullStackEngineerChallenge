@@ -62,9 +62,9 @@ module.exports = (knex) => ({
         .first();
 
       await knex('performance_review_feedbacks').insert(
-        args.feedbackUserIds.map((user) => ({
+        args.feedbackUserIds.map((userId) => ({
           review_id: performanceReview.id,
-          user_id: user.id,
+          user_id: userId,
           feedback: null,
         }))
       );

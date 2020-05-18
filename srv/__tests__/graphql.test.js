@@ -117,6 +117,9 @@ describe('graphql', () => {
       expect(typeof performanceReview.id).toBe('string');
       expect(Array.isArray(performanceReview.feedbacks)).toBeTruthy();
       expect(performanceReview.feedbacks.length).toBe(feedbackUserIds.length);
+      expect(typeof performanceReview.feedbacks[0]).toBe('object');
+      expect(typeof performanceReview.feedbacks[0].user).toBe('object');
+      expect(performanceReview.feedbacks[0].feedback).toBeNull();
     });
 
     it('can submit feedback to a performance review', async () => {
