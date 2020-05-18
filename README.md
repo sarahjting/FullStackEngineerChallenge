@@ -1,39 +1,47 @@
 # Full Stack Developer Challenge
-This is an interview challengs. Please feel free to fork. Pull Requests will be ignored.
 
-## Requirements
-Design a web application that allows employees to submit feedback toward each other's performance review.
+PayPay challenge.
 
-*Partial solutions are acceptable.*  It is not necessary to submit a complete solution that implements every requirement.
+## Implemented functionality
 
-### Admin view
-* Add/remove/update/view employees
-* Add/update/view performance reviews
-* Assign employees to participate in another employee's performance review
+- Admin functionality:
+  - Admins can view a list of all performance reviews.
+  - Admins can view a performance review for an employee, and feedback submitted by all assigned employees.
+  - Admins can create a new performance review for an employee, and assign other employees to submit feedback for that review.
+- Employee functionality:
+  - Employees can view a list of all performance reviews that still require their feedback.
+  - Employees can submit a feedback for a performance review.
 
-### Employee view
-* List of performance reviews requiring feedback
-* Submit feedback
+## Implementation
 
-## Challenge Scope
-* High level description of design and technologies used
-* Server side API (using a programming language and/or framework of your choice)
-  * Implementation of at least 3 API calls
-  * Most full stack web developers at PayPay currently use Java, Ruby on Rails, or Node.js on the server(with MySQL for the database), but feel free to use other tech if you prefer
-* Web app
-  * Implementation of 2-5 web pages using a modern web framework (e.g. React or Angular) that talks to server side
-    * This should integrate with your API, but it's fine to use static responses for some of it 
-* Document all assumptions made
-* Complete solutions aren't required, but what you do submit needs to run.
+- Front end: Vue, Vue Router, Vuex, Vue Bootstrap
+- Back end: Node, Express, Apollo
+- Testing: Jest
 
-## How to complete this challenge
-* Fork this repo in github
-* Complete the design and code as defined to the best of your abilities
-* Place notes in your code to help with clarity where appropriate. Make it readable enough to present to the PayPay interview team
-* Complete your work in your own github repo and send the results to us and/or present them during your interview
+## Usage
 
-## What are we looking for? What does this prove?
-* Assumptions you make given limited requirements
-* Technology and design choices
-* Identify areas of your strengths
-* This is not a pass or fail test, this will serve as a common ground that we can deep dive together into specific issues
+- Install dependencies using `npm i`
+- `cp .env.default .env` and fill in `.env` with your port and database settings
+- Migrate and seed database using `npm run db:migrate && npm run db:seed`
+- Build assets using `npm run build`
+- Put up server using `npm run start`
+- By default this will be up at `http://localhost:3000`
+- Log in with "Admin" or "User 1".
+- Test using `npm run test`
+
+## Assumptions made
+
+### Challenge scope assumptions
+
+- I’ve assumed security and authentication is outside of the scope of this test; currently the server accepts all requests without checking if the user is authorized or the validity of the data. In a real production environment, we'd need authentication, data validation and proper error handling.
+- I’ve assumed performance is outside of the scope of this test; in a production environment, some sort of batching functionality (eg. DataLoader) would be required to make GraphQL feasible. Would also not load the entire database into memory for testing or for forms (lol).
+- Since the scope of the test is quite small I opted to just put all the GraphQL business logic in the resolver file. Normally I’d split this out into a model or service layer for legibility.
+
+### Business assumptions
+
+- The only details stored about employees are their name.
+- The only details stored about performance reviews is date created, and feedback of that employee’s peers.
+- Administators can create an unlimited number of performance reviews per employee, and assign an unlimited number of peers to those performance reports to provide feedback.
+- Peers are assigned by the administrator at the time the review is created.
+- Administrators (and only administrators) can view all performance reports.
+- Once an employee has submitted feedback to a performance report, the performance report is removed from their dashboard. Employees are unable to view performance report information or history.
