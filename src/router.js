@@ -1,9 +1,9 @@
 import Vue from 'vue';
 import VueRouter from 'vue-router';
 import PerformanceReviewIndex from './components/PerformanceReview/PerformanceReviewIndex';
+import PerformanceReviewView from './components/PerformanceReview/PerformanceReviewView';
 import Login from './components/Login';
 import store from './vuex';
-import { BIconExclamationSquareFill } from 'bootstrap-vue';
 
 Vue.use(VueRouter);
 
@@ -12,6 +12,11 @@ const routes = [
     path: '/performance-reviews',
     component: PerformanceReviewIndex,
     name: 'performanceReviewIndex',
+  },
+  {
+    path: '/performance-review/:id',
+    component: PerformanceReviewView,
+    name: 'performanceReviewView',
   },
   { path: '/', component: Login, name: 'login' },
 ];

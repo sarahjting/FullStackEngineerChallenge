@@ -16,7 +16,7 @@
         <b-icon-plus-circle /> Create Review
       </router-link>
     </div>
-    <div v-if="performanceReviews.length === 0">
+    <div v-if="$store.state.performanceReviews.length === 0">
       No reviews found.
     </div>
     <table class="table table-striped table-hover mt-3 text-center" v-else>
@@ -32,7 +32,7 @@
         </td>
       </thead>
       <tr
-        v-for="performanceReview in performanceReviews"
+        v-for="performanceReview in $store.state.performanceReviews"
         :key="performanceReview.id"
       >
         <td>
@@ -44,7 +44,7 @@
             {{ performanceReview.user.name }}
           </router-link>
         </td>
-        <td v-if="isAdmin">
+        <td v-if="isAdmin && performanceReview.feedbacks">
           {{
             performanceReview.feedbacks.filter((y) => y.feedback).length +
               '/' +
@@ -61,9 +61,6 @@ import utils from '../../utils';
 import moment from 'moment';
 export default {
   name: 'PerformanceReviewIndex',
-  data: () => ({
-    performanceReviews: [],
-  }),
   computed: {
     isAdmin: function() {
       return this.$store.state.loggedInUser.isAdmin;
@@ -77,13 +74,13 @@ export default {
   mounted: function() {
     if (this.$store.state.loggedInUser.isAdmin) {
       utils.performanceReviews().then((performanceReviews) => {
-        this.performanceReviews = performanceReviews;
+        this.$store.commit('setPerformanceReviews', performanceReviews);
       });
     } else {
       utils
         .pendingPerformanceReviews(this.$store.state.loggedInUser)
         .then((performanceReviews) => {
-          this.performanceReviews = performanceReviews;
+          this.$store.commit('setPerformanceReviews', performanceReviews);
         });
     }
   },
