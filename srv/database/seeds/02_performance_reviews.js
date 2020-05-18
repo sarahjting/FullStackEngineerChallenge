@@ -11,14 +11,14 @@ exports.seed = async function(knex) {
 
   const performanceReviews = await knex('performance_reviews');
   await Promise.all(
-    performanceReviews.map((review) =>
+    performanceReviews.map((review, j) =>
       knex('performance_review_feedbacks').insert(
         users
           .filter((user) => user.id !== review.user_id)
           .map((user, i) => ({
             review_id: review.id,
             user_id: user.id,
-            feedback: i === 0 ? 'Foo' : null,
+            feedback: i === j ? 'Foo' : null,
           }))
       )
     )
